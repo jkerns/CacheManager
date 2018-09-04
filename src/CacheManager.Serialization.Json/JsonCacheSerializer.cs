@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using CacheManager.Core;
 using CacheManager.Core.Internal;
@@ -23,8 +22,18 @@ namespace CacheManager.Serialization.Json
         /// Initializes a new instance of the <see cref="JsonCacheSerializer"/> class.
         /// </summary>
         public JsonCacheSerializer()
-            : this(new JsonSerializerSettings(), new JsonSerializerSettings())
+            : this(CreateDefaultSettings(), CreateDefaultSettings())
         {
+        }
+
+        private static JsonSerializerSettings CreateDefaultSettings()
+        {
+            if (JsonConvert.DefaultSettings != null)
+            {
+                return JsonConvert.DefaultSettings();
+            }
+
+            return new JsonSerializerSettings();
         }
 
         /// <summary>
